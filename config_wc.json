@@ -1,0 +1,41 @@
+{
+  "macros": {
+    "all-pools": {
+      "type": "constDef",
+      "result": "@import(pool.json)"
+    },
+    "poolGen": {
+      "type": "macroDef",
+      "params": ["type"],
+      "result": ["Pool|%type%"]
+    }
+  },
+  "pools": "%all-pools%",
+  "route": {
+    "type": "OperationSelectorRoute",
+    "operation_policies": {
+      "get": {
+        "type": "WarmUpRoute",
+        "cold": {
+          "type": "MissFailoverRoute",
+          "children": [
+              "@poolGen(@str(new))"
+          ]
+        },
+        "warm": {
+          "type": "MissFailoverRoute", 
+          "children": [
+            "@poolGen(@str(old))"
+          ]
+        }
+      }
+    },
+    "default_policy": {
+      "type": "AllFastestRoute",
+      "children": [
+        "@poolGen(@str(new))",
+        "@poolGen(@str(old))"
+      ]
+    }
+  }
+}
