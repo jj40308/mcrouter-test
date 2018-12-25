@@ -1,0 +1,35 @@
+version: '3'
+services: 
+    memcached0:
+        container_name: memcached0
+        image: memcached
+        ports: 
+            - "11211"
+    memcached1:
+        container_name: memcached1
+        image: memcached
+        ports:
+            - "11211"
+    memcached2:
+        container_name: memcached2
+        image: memcached
+        ports:
+            - "11211"
+    memcached3:
+        container_name: memcached3
+        image: memcached
+        ports:
+            - "11211"
+    mcrouter: 
+        container_name: mcrouter 
+        image: mcrouter/mcrouter:latest
+        volumes: 
+            - .:/home
+        command: --config 'file:/home/config_wc.json' -p 5000
+        ports:
+            - "5000:5000"
+        depends_on:
+            - memcached0
+            - memcached1
+            - memcached2
+            - memcached3
