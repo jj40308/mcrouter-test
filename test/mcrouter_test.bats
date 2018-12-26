@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test_helpers/memcached_test_helper
+load ../test_helpers/memcached_test_helper
 teardown() {
     for i in {0..2}
     do

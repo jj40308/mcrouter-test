@@ -24,7 +24,7 @@ services:
         container_name: mcrouter 
         image: mcrouter/mcrouter:latest
         volumes: 
-            - .:/home
+            - ./config:/home
         command: --config 'file:/home/config_wc.json' -p 5000
         ports:
             - "5000:5000"
