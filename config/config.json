@@ -1,0 +1,23 @@
+{
+  "macros": {
+    "all-pools": {
+      "type": "constDef",
+      "result": "@import(pool.json)"
+    },
+    "poolGen": {
+      "type": "macroDef",
+      "params": ["type"],
+      "result": ["Pool|%type%"]
+    }
+  },
+  "pools": "%all-pools%",
+  "route": {
+    "type": "OperationSelectorRoute",
+    "default_policy": {
+      "type": "AllSyncRoute",
+      "children": [
+        "@poolGen(@str(A))"
+      ]
+    }
+  }
+}

@@ -18,3 +18,23 @@ memcached_del(){
 get_docker_host_port(){
     docker inspect $1 | grep HostPort | sed -n 2p | awk '{print $2}' | sed 's/"//g'
 }
+
+set_config_file(){
+    cp config/config.json config/config_tmp.json
+    cp config/pool.json config/pool_tmp.json
+    cat config/$1/config.json > config/config.json
+    cat config/$1/pool.json > config/pool.json
+}
+
+set_config_file(){
+    cp config/config.json config/config_tmp.json
+    cp config/pool.json config/pool_tmp.json
+    cat config/$1/config.json > config/config.json
+    cat config/$1/pool.json > config/pool.json
+}
+
+revert_config_file_default(){
+    cat config/config_tmp.json > config/config.json
+    cat config/pool_tmp.json > config/pool.json
+    rm config/*_tmp.json
+}

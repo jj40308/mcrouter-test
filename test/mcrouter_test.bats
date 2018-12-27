@@ -1,6 +1,7 @@
 #!/usr/bin/env bats
 load ../test_helpers/memcached_test_helper
 teardown() {
+    revert_config_file_default
     for i in {0..2}
     do
         memcached_del $key 'memcached'$i
@@ -9,6 +10,7 @@ teardown() {
 }
 
 @test "mcrouter set all test" {
+    set_config_file all_fatest_test
     key='rj'
     value='r'
     run memcached_set $key $value 'mcrouter'
@@ -22,6 +24,7 @@ teardown() {
 } 
 
 @test "mcrouter warm cold route test" {
+    set_config_file warm_cold_test 
     key='gw'
     value='g'
     run memcached_set $key $value 'memcached0'

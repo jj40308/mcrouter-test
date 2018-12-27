@@ -25,7 +25,7 @@ services:
         image: mcrouter/mcrouter:latest
         volumes: 
             - ./config:/home
-        command: --config 'file:/home/config_wc.json' -p 5000
+        command: --config 'file:/home/config.json' -p 5000
         ports:
             - "5000:5000"
         depends_on:

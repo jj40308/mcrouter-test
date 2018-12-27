@@ -1,0 +1,15 @@
+
+{
+  "old": {
+    "servers": [
+      "memcached0:11211",
+      "memcached1:11211"
+    ]
+  },
+  "new": {
+    "servers": [
+      "memcached2:11211"
+    ]
+  }
+}
+
