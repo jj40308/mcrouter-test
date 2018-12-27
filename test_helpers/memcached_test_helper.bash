@@ -15,6 +15,14 @@ memcached_del(){
     (echo -e 'delete '"$1"''; sleep 1) | telnet localhost $host_port
 }
 
+remove_test_cache_data(){
+    count=$1
+    for (( i=0; i<count; i++))
+    do
+        memcached_del $2 'memcached'$i
+    done
+}
+
 get_docker_host_port(){
     docker inspect $1 | grep HostPort | sed -n 2p | awk '{print $2}' | sed 's/"//g'
 }

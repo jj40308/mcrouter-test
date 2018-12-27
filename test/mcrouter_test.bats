@@ -2,20 +2,18 @@
 load ../test_helpers/memcached_test_helper
 teardown() {
     revert_config_file_default
-    for i in {0..2}
-    do
-        memcached_del $key 'memcached'$i
-        [ -n "$output" ]
-    done
+    remove_test_cache_data $serversCount $key
+    [ -n "$output" ]
 }
 
 @test "mcrouter set all test" {
     set_config_file all_fatest_test
     key='rj'
     value='r'
+    serversCount=3
     run memcached_set $key $value 'mcrouter'
     [ "${lines[3]}" = "STORED" ]
-    for i in {0..2}
+    for (( i=0; i<serversCount; i++ ))
     do
         run memcached_get $key 'memcached'$i
         [ "${lines[3]}" = "VALUE rj 0 1" ]
@@ -27,6 +25,7 @@ teardown() {
     set_config_file warm_cold_test 
     key='gw'
     value='g'
+    serversCount=3
     run memcached_set $key $value 'memcached0'
     [ "${lines[3]}" = "STORED" ]
 
